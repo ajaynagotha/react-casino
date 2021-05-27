@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Card, Row, Col, Badge, Tabs, Tab } from 'react-bootstrap';
 import { trackResults } from '../services/trackResults'
-import { InfoModal } from './InfoModal';
+import InfoModal from './InfoModal';
 import {connect} from 'react-redux';
 class ListResults extends Component {
     constructor() {
@@ -20,6 +20,7 @@ class ListResults extends Component {
         trackResults().then((res) => {
             console.log("results", res)
             this.setState({ CurrentResults: res })
+            console.log(this.state.CurrentResults)
         })
     }
     setModalShow = (result) => {

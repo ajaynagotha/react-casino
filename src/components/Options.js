@@ -19,6 +19,10 @@ class Options extends Component {
             casinoList: []
         }
     }
+    componentDidMount() {
+        console.log(this.props.casinos)
+        this.setState({CasinoList: this.props.casinos})
+    }
     removeCasino = async (filter) => {
         var fl = this.state.casinoList;
         if (fl.includes(filter)) {
@@ -29,7 +33,8 @@ class Options extends Component {
             if (fl.length === 0) {
                 fl = [];
             }
-            await this.setState({ currentFilters: fl })
+            await this.setState({ CasinoList: fl })
+            this.props.saveCasino(this.state.casinoList);
         }
     }
     removeFilter = async (filter) => {
@@ -54,10 +59,9 @@ class Options extends Component {
     addCasino = async (e) => {
         var cArr = this.state.casinoList;
         if (!cArr.includes(e.target.getAttribute("data-casino"))) {
-            cArr.push(e.target.getAttribute("data-casino"));
+            cArr.push(e.target.getAttribute("data-casino"))
             await this.setState({ casinoList: cArr })
-            console.log(JSON.stringify(this.state.casinoList))
-            this.props.saveCasino(this.state.casinoList);
+            this.props.saveCasino(this.state.casinoList)
         }
     }
     handleChange = async (e) => {
@@ -326,7 +330,7 @@ class Options extends Component {
                         </Form>
                     </Tab>
                     <Tab eventKey="filters" title="Filters">
-                        <SelectedCasino casinos={this.state.casinoList.join()} removeit = {this.removeCasino}/>
+                        <SelectedCasino casinos={(this.props.casinos) ? this.props.casinos.join() : ""} removeit = {this.removeCasino}/>
                         <div className="casino-select">
                             <Dropdown className="d-inline-block mr-3 font-18">
                                 <Dropdown.Toggle variant="success" className="bg-btn font-18" id="dropdown-basic">
@@ -359,7 +363,13 @@ class Options extends Component {
         )
     }
 }
+function mapStateToProps(state) {
+    return {
+        filters: state.activeFilter,
+        casinos: state.selectedCasino
+    };
+}
 function matchDispatchToProps(dispatch){
     return bindActionCreators({saveFilters: saveFilters, saveCasino: saveCasino}, dispatch);
 }
-export default connect(null, matchDispatchToProps)(Options)
+export default connect(mapStateToProps, matchDispatchToProps)(Options)
