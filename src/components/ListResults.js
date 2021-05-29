@@ -57,12 +57,12 @@ class ListResults extends Component {
                                                         }
                                                     </Card.Text>
                                                 </Card.Body>
-                                                <Card.Footer>
-                                                    <p className="text-white float-left mb-0">Casinos:&nbsp;</p>
+                                                <Card.Footer className="text-center">
+                                                    <p className="text-white text-center mb-0">Casinos:&nbsp;</p>
                                                     {
                                                         result.casinos.map((casino, idx) => {
                                                             return(
-                                                                <span className="text-white float-left">{casino}{(idx !== result.casinos.length-1) ? ",": ""}&nbsp;</span>
+                                                                <span className="text-white">{casino}{(idx !== result.casinos.length-1) ? ",": ""}&nbsp;</span>
                                                             )
                                                         })
                                                     }

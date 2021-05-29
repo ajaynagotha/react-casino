@@ -148,3 +148,8 @@ nav[role='tablist'] {
 .font-18 {
   font-size: 18px;
 }
+@media only screen and (max-width: 768px) {
+  #casino-tabs-tabpane-options {
+    padding: 20px !important;
+  }
+}
