@@ -32,7 +32,7 @@ class ListResults extends Component {
     render() {
         return (
             <Container className="result-list">
-                {JSON.stringify(this.props.casinos)}
+                {JSON.stringify(this.props.filters)}
                         <Row>
                             {
                                 this.props.results.map((result) => {
@@ -57,6 +57,16 @@ class ListResults extends Component {
                                                         }
                                                     </Card.Text>
                                                 </Card.Body>
+                                                <Card.Footer>
+                                                    <p className="text-white float-left mb-0">Casinos:&nbsp;</p>
+                                                    {
+                                                        result.casinos.map((casino, idx) => {
+                                                            return(
+                                                                <span className="text-white float-left">{casino}{(idx !== result.casinos.length-1) ? ",": ""}&nbsp;</span>
+                                                            )
+                                                        })
+                                                    }
+                                                </Card.Footer>
                                             </Card>
                                         </Col>
                                     )
