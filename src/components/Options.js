@@ -21,7 +21,7 @@ class Options extends Component {
     }
     componentDidMount() {
         console.log(this.props.casinos)
-        this.setState({CasinoList: this.props.casinos})
+        this.setState({CasinoList: this.props.casinos, currentFilters: this.props.filters})
     }
     removeCasino = async (filter) => {
         var fl = this.state.casinoList;

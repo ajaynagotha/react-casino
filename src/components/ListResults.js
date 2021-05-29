@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Card, Row, Col, Badge, Tabs, Tab } from 'react-bootstrap';
+import { Container, Card, Row, Col, Badge } from 'react-bootstrap';
 import { trackResults } from '../services/trackResults'
 import InfoModal from './InfoModal';
 import {connect} from 'react-redux';
@@ -33,17 +33,15 @@ class ListResults extends Component {
         return (
             <Container className="result-list">
                 {JSON.stringify(this.props.casinos)}
-                <Tabs defaultActiveKey="william-hill" id="casino-tabs">
-                    <Tab eventKey="william-hill" title="William Hill">
                         <Row>
                             {
-                                this.state.CurrentResults.map((result) => {
+                                this.props.results.map((result) => {
                                     return (
                                         <Col lg='3' onClick={(e) => this.setModalShow(result)}>
                                             <Card className='mb-3 shadow' key={result.id}>
                                                 <Card.Img variant="top" src="https://cmscdn.staticcache.org/assets/image/0010/1482715/WHC_40604_GT_EvolutionRouletteLobby_372x372.jpg" />
                                                 <Card.Body>
-                                                    <Card.Title className='text-white'>{result.name}</Card.Title>
+                                                    <Card.Title className='text-white'>{result.display_name}</Card.Title>
                                                     <Card.Text className='clearfix mb-1'>
                                                         {
                                                             result.results.filter((result, idx) => idx < 5).map((result) => {
@@ -72,12 +70,6 @@ class ListResults extends Component {
                                 onHide={() => this.setModalHide(false)}
                             />
                         </Row>
-                    </Tab>
-                    <Tab eventKey="bet365" title="Bet365">
-                    </Tab>
-                    <Tab eventKey="roobet" title="RooBet">
-                    </Tab>
-                </Tabs>
             </Container>
         )
     }
@@ -85,7 +77,8 @@ class ListResults extends Component {
 function mapStateToProps(state) {
     return {
         filters: state.activeFilter,
-        casinos: state.selectedCasino
+        casinos: state.selectedCasino,
+        results: state.results
     };
 }
 export default connect(mapStateToProps)(ListResults);
