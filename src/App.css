@@ -23,6 +23,12 @@ body {
  .nav-link:hover {
   color: #f6a800 !important;
 }
+.card.matching {
+  border: 2px solid #f6a800;
+}
+.card.matching .card-body, .card.matching .card-footer {
+  background-color: #281c62;
+}
 .result-list .card-title {
    font-size: 1rem !important;
    text-align: center !important;
@@ -74,20 +80,10 @@ nav[role='tablist'] {
 .navbar-brand {
   font-weight: 700;
 }
-.cs-btn {
-  display: inline-block !important;
-  color: white !important;
-  background-color: #febd00 !important;
-  border-style: solid !important;
-  border-width: 0px 0px 3px 0px !important;
-  border-color: #be7900 !important;
-  border-radius: 4px !important;
-  padding: 10px 18px 10px 18px !important;
-  font-family: "Oswald", Sans-serif !important;
-}
+
 .cs-btn {
   display: block !important;
-  width: 150px !important;
+  min-width: 150px !important;
   color: white !important;
   background-color: #febd00 !important;
   border-style: solid !important;

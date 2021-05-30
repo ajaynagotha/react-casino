@@ -30,8 +30,8 @@ class InfoModal extends React.Component {
                 </p>
                     <div className='clearfix'>
                         {
-                            this.props.result.split(',').map((result) => {
-                                return (<Badge className={(blackNumbers.includes(Number(result))) ? "badge-black m-1" : (redNumbers.includes(Number(result))) ? "badge-red m-1" : (Number(result) === 0) ? "badge-green m-1" : "m-1"}>{result}</Badge>)
+                            this.props.result.split(',').map((result, idx) => {
+                                return (<Badge key={idx} className={(blackNumbers.includes(Number(result))) ? "badge-black m-1" : (redNumbers.includes(Number(result))) ? "badge-red m-1" : (Number(result) === 0) ? "badge-green m-1" : "m-1"}>{result}</Badge>)
                             })
                         }
                     </div>

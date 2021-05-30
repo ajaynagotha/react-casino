@@ -1,15 +1,19 @@
 export const saveFilters = (filter) =>{
-    console.log("selected filters")
     return {
         type: "SELECTED_FILTERS",
         payload: filter
     }
 }
-export const saveCasino = (filter) =>{
-    console.log("selected filters")
+export const saveCasino = (casino) =>{
     return {
         type: "SELECTED_CASINO",
-        payload: filter
+        payload: casino
+    }
+}
+export const saveSettings = (setting) =>{
+    return {
+        type: "SETTINGS",
+        payload: setting
     }
 }
 

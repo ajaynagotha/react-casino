@@ -10,18 +10,20 @@ import { CasinoList } from '../config/CasinoList'
 import SelectedCasino from './SelectedCasino'
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {saveCasino, saveFilters} from '../actions/index'
+import {saveCasino, saveFilters, saveSettings} from '../actions/index'
+import { Redirect } from 'react-router'
 class Options extends Component {
     constructor() {
         super()
         this.state = {
             currentFilters: '',
-            casinoList: []
+            casinoList: [],
+            settings: ''
         }
     }
     componentDidMount() {
-        console.log(this.props.casinos)
-        this.setState({CasinoList: this.props.casinos, currentFilters: this.props.filters})
+        console.log(this.props.filters)
+        this.setState({CasinoList: (this.props.casinos.CasinoList) ? this.props.casinos.CasinoList : [], currentFilters: (this.props.filters.currentFilters) ? this.props.filters.currentFilters : "", settings: this.props.settings.settings ? this.props.settings.settings: ''})
     }
     removeCasino = async (filter) => {
         var fl = this.state.casinoList;
@@ -82,7 +84,19 @@ class Options extends Component {
             console.log(JSON.stringify(this.state.currentFilters))
         }
     }
+    handleSettings = (e) => {
+        var settings = {...this.state.settings}
+        settings[e.target.name] = e.target.value
+        this.setState({settings: settings})
+    }
+    saveOptions = async () => {
+        this.setState({redirect: true})
+        await this.props.saveFilters(this.state);
+    }
     render() {
+        if(this.state.redirect) {
+            return <Redirect to="/" />
+        }
         return (
             <Container className="tracking-page py-5">
                 <Tabs defaultActiveKey="options" id="casino-tabs" className="justify-content-center">
@@ -96,7 +110,7 @@ class Options extends Component {
                                     type='radio'
                                     id='even'
                                     label='Even'
-                                    value='Even'
+                                    value="Even"
                                     name='evenodd'
                                     className="text-white"
                                     onChange={(e) => this.handleChange(e)}
@@ -108,7 +122,7 @@ class Options extends Component {
                                     id='odd'
                                     label='Odd'
                                     name='evenodd'
-                                    value='odd'
+                                    value='Odd'
                                     className="text-white"
                                     onChange={(e) => this.handleChange(e)}
                                 />
@@ -313,7 +327,7 @@ class Options extends Component {
                                 <FormLabel className="text-white">Notifications</FormLabel>
                                 <div className='clearfix'>
                                     <FormLabel className="text-white inline-block">Number of times in a row</FormLabel>
-                                    <FormControl type='text' className='inline-block mx-3 linput' placeholder='10' name='numof' ></FormControl>
+                                    <FormControl type='text' className='inline-block mx-3 linput' placeholder='10' name='noi' onChange={this.handleSettings}></FormControl>
                                 </div>
                                 <Form.Check
                                     custom
@@ -322,15 +336,15 @@ class Options extends Component {
                                     id='sound'
                                     label='Sounds'
                                     name='sound'
-                                    // onChange={(e) => this.handleChange(e)}
+                                    onChange={this.handleSettings}
                                     className="text-white"
                                 />
                             </FormGroup>
-                            <Button onClick={() => this.props.saveFilters(this.state.currentFilters)} className="btn cs-btn mx-auto">Save</Button>
+                            <Button onClick={this.saveOptions} className="btn cs-btn mx-auto">Save</Button>
                         </Form>
                     </Tab>
                     <Tab eventKey="filters" title="Filters">
-                        <SelectedCasino casinos={(this.props.casinos) ? this.props.casinos.join() : ""} removeit = {this.removeCasino}/>
+                        <SelectedCasino casinos={(this.props.casinos.CasinoList) ? this.props.casinos.casinoList.join() : ""} removeit = {this.removeCasino}/>
                         <div className="casino-select">
                             <Dropdown className="d-inline-block mr-3 font-18">
                                 <Dropdown.Toggle variant="success" className="bg-btn font-18" id="dropdown-basic">
@@ -366,10 +380,11 @@ class Options extends Component {
 function mapStateToProps(state) {
     return {
         filters: state.activeFilter,
-        casinos: state.selectedCasino
+        casinos: state.activeFilter,
+        settings: state.activeFilter
     };
 }
 function matchDispatchToProps(dispatch){
-    return bindActionCreators({saveFilters: saveFilters, saveCasino: saveCasino}, dispatch);
+    return bindActionCreators({saveFilters: saveFilters, saveCasino: saveCasino, saveSettings: saveSettings}, dispatch);
 }
 export default connect(mapStateToProps, matchDispatchToProps)(Options)
