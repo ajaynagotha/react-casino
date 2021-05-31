@@ -50,7 +50,7 @@ class ListResults extends Component {
         var results = this.props.results
         results = results.map(result => {
             this.state.filters.forEach(async (filter) => {
-                var status = await matchResults.applyFilters(result.results.filter((val, idx) => {return idx < 4}), filter, this.props.filters)
+                var status = await matchResults.applyFilters(result.results.filter((val, idx) => {return idx < (this.props.settings.settings ? Number(this.props.settings.settings.noi) : 4)}), filter, this.props.filters)
                 result[filter] = status
                 if(status === true) {
                     result.match = "matching"
