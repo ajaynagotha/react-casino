@@ -24,7 +24,6 @@ class ListResults extends Component {
         }
     }
     async componentDidMount() {
-        this.matchResult()
         await this.setState({ CurrentResults: this.props.results })
         var fl = { ...this.props.filters.currentFilters };
         var filters = [];
@@ -66,7 +65,7 @@ class ListResults extends Component {
         });
         await this.setState({ CurrentResults: results })
         await this.setState({ CurrentResults: results })
-        if((stack.includes(true)) && (this.state.settings.sound==="on")) {
+        if((stack.includes(true)) && (this.state.settings.sound===true)) {
             this.setState({sound: "PLAYING"})
         }
         console.log(this.state.CurrentResults)
@@ -79,7 +78,7 @@ class ListResults extends Component {
                     playStatus={this.state.sound}
                 />
                 <div className="my-3 row"><Link to="#" onClick={this.matchResult} className="btn cs-btn float-right ml-auto" style={{ marginRight: 15 + "px" }}>Track Results</Link></div>
-                {JSON.stringify(this.props.filters.currentFilters)}
+                {JSON.stringify(this.props.filters.settings)}
                 <Row>
                     {
                         this.state.CurrentResults.map((result, idx) => {

@@ -22,7 +22,6 @@ class Options extends Component {
         }
     }
     componentDidMount() {
-        console.log(this.props.filters)
         this.setState({CasinoList: (this.props.casinos.CasinoList) ? this.props.casinos.CasinoList : [], currentFilters: (this.props.filters.currentFilters) ? this.props.filters.currentFilters : "", settings: this.props.settings.settings ? this.props.settings.settings: ''})
     }
     removeCasino = async (filter) => {
@@ -85,9 +84,16 @@ class Options extends Component {
         }
     }
     handleSettings = (e) => {
-        var settings = {...this.state.settings}
-        settings[e.target.name] = e.target.value
-        this.setState({settings: settings})
+        if(e.target.name === "sound") {
+            var settings = {...this.state.settings}
+            settings[e.target.name] = e.target.checked
+            this.setState({settings: settings})
+        }
+        else {
+            var settings = {...this.state.settings}
+            settings[e.target.name] = e.target.value
+            this.setState({settings: settings})
+        }
     }
     saveOptions = async () => {
         this.setState({redirect: true})
@@ -327,7 +333,7 @@ class Options extends Component {
                                 <FormLabel className="text-white">Notifications</FormLabel>
                                 <div className='clearfix'>
                                     <FormLabel className="text-white inline-block">Number of times in a row</FormLabel>
-                                    <FormControl type='text' className='inline-block mx-3 linput' placeholder='10' name='noi' onChange={this.handleSettings}></FormControl>
+                                    <FormControl type='text' className='inline-block mx-3 linput' placeholder='10' value={(this.state.settings.noi) ? this.state.settings.noi : ''} name='noi' onChange={this.handleSettings}></FormControl>
                                 </div>
                                 <Form.Check
                                     custom
@@ -338,6 +344,7 @@ class Options extends Component {
                                     name='sound'
                                     onChange={this.handleSettings}
                                     className="text-white"
+                                    checked={(this.state.settings.sound) ? this.state.settings.sound : false}
                                 />
                             </FormGroup>
                             <Button onClick={this.saveOptions} className="btn cs-btn mx-auto">Save</Button>
