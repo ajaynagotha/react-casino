@@ -78,7 +78,6 @@ class ListResults extends Component {
                     playStatus={this.state.sound}
                 />
                 <div className="my-3 row"><Link to="#" onClick={this.matchResult} className="btn cs-btn float-right ml-auto" style={{ marginRight: 15 + "px" }}>Track Results</Link></div>
-                {JSON.stringify(this.props.filters.settings)}
                 <Row>
                     {
                         this.state.CurrentResults.map((result, idx) => {
