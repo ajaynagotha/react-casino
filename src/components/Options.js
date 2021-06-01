@@ -90,7 +90,7 @@ class Options extends Component {
             this.setState({settings: settings})
         }
         else {
-            var settings = {...this.state.settings}
+            settings = {...this.state.settings}
             settings[e.target.name] = e.target.value
             this.setState({settings: settings})
         }
